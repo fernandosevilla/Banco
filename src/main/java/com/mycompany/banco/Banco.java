@@ -52,6 +52,7 @@ public class Banco {
 
     // Fin Getters y Setters
     
+    // Inicio Metodos Publicos
     public boolean agregarCuenta(String codigo, String nombreTitular) {
         if (this.numeroCuentas > MAX_CUENTAS) {
             System.out.println("No puedes crearte mas de 100 cuentas");
@@ -66,20 +67,96 @@ public class Banco {
     public String consultarCuenta(String codigo) {
         for (int i = 0; i < numeroCuentas; i++) {
             if (cuentas[i].getIban().equals(codigo)) {
-                return "Titular: " + codigo + "\t" + "Saldo: " + cuentas[i].getSaldo();
+                return "IBAN: " + codigo + "\t" + "Titular: " + cuentas[i].getTitular() + "\t" + "Saldo: " + cuentas[i].getSaldo();
             }
         }
         return "La cuenta que has indicado no se ha encontrado";
     }
     
-    private Cuenta localizarCuenta(String codigo) {
-        // se busca secuencialmente la cuenta con un codigo
-        Cuenta cuenta = new Cuenta();
+    public boolean borrarCuenta(String codigo) {
+        boolean cuentaEncontrada = false;
+        
         for (int i = 0; i < numeroCuentas; i++) {
-            if (cuentas[i].getIban().equals(codigo)) {
-                return cuenta;
+            if (cuentas[i].getIban().equals(codigo)){ // obtiene el ibjn de la posicion de cuenta y lo compara con el parametro que se le pasa al metodo
+                cuentaEncontrada = true;
+                
+                // movemos las cuentas despues de borrar
+                for (int j = i; j < numeroCuentas - 1; j++) {
+                    cuentas[j] = cuentas [j + 1];
+                }
+                
+                numeroCuentas--;
+                System.out.println("Cuenta eliminada");
             }
         }
+        if (cuentaEncontrada = false) {
+            System.out.println("Cuenta no encontrada");
+        }
+        
+        return cuentaEncontrada;
+    }
+    
+    public boolean existeCuetna(String codigo) {       
+        for (int i = 0; i < numeroCuentas; i++) {
+            if (cuentas[i].getIban().equals(codigo)) { // obtiene el ibjn de la posicion de cuenta y lo compara con el parametro que se le pasa al metodo
+                System.out.println("La cuenta existe"); 
+                return true;
+            }
+        }
+        
+        System.out.println("La cuenta no existe");
+        return false;
+    }
+    
+    public String listadoCuentas() {
+        StringBuilder listado = new StringBuilder();
+        
+        System.out.println("Listado de cuentas:");
+        
+        for (int i = 0; i < numeroCuentas; i++) {
+            // esto se hace como cuando lo del ejercicio de las interfaces de usuario (creo xd)
+            Cuenta cuentaListado = localizarCuenta(cuentas[i].getIban()); // se hace un objeto que localiza el iban de la posicion de la cuenta
+            
+            // lo siguiente junta todo con el append
+            listado.append("IBAN: ").append(cuentaListado.getIban()).append("\t").append("Titular: ").append(cuentaListado.getTitular()).append("\t").append("Saldo: ").append(cuentaListado.getSaldo()).append("\n");
+        }
+        
+        return listado.toString();
+    }
+    
+    public void ingresar(String codigo, double importe) {
+        
+    }
+    
+    public void retirar(String codigo, double importe) {
+        
+    }
+    
+    // Fin Metodos Publicos
+    
+    
+    // Inicio Metodos Privados
+    
+//    private Cuenta localizarCuenta(String codigo) {
+//        // se busca secuencialmente la cuenta con un codigo
+//        Cuenta cuenta = new Cuenta();
+//        for (int i = 0; i < numeroCuentas; i++) {
+//            if (cuentas[i].getIban().equals(codigo)) { // obtiene el ibjn de la posicion de cuenta y lo compara con el parametro que se le pasa al metodo
+//                return cuenta; // devuelve la cuenta
+//            }
+//        }
+//        return null;
+//    }
+    
+    private Cuenta localizarCuenta(String codigo) {
+        Cuenta cuenta = new Cuenta();
+        
+        if (existeCuetna(codigo)) {
+            return cuenta;
+        }
+        
         return null;
     }
+    
+    // Fin Metodos Privados
 }
