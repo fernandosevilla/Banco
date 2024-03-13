@@ -72,7 +72,7 @@ public class Principal {
                 case 0:
                     break;
                 default:
-                    System.out.println("La opcion no es valida");
+                    System.out.println("La opcion no es valida.");
             }
         } while (opcion != 0);
 
