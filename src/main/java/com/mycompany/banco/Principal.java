@@ -55,6 +55,7 @@ public class Principal {
                     String ibanRetiro = teclado.nextLine();
                     System.out.print("Ingresa la cantidad a retirar: ");
                     double montoRetiro = teclado.nextDouble();
+                    teclado.nextLine();
                     miBanco.retirar(ibanRetiro, montoRetiro);
                     break;
                 case 5:
@@ -62,6 +63,7 @@ public class Principal {
                     String ibanIngreso = teclado.nextLine();
                     System.out.print("Ingresa la cantidad a ingresar: ");
                     double montoIngreso = teclado.nextDouble();
+                    teclado.nextLine();
                     miBanco.ingresar(ibanIngreso, montoIngreso);
                     break;
                 case 6:
