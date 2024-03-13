@@ -111,25 +111,22 @@ public class Banco {
     public String listadoCuentas() {
         StringBuilder listado = new StringBuilder();
         
-        System.out.println("Listado de cuentas:");
+        listado.append("Total de cuentas: ").append(numeroCuentas).append("):\n");
         
         for (int i = 0; i < numeroCuentas; i++) {
             // esto se hace como cuando lo del ejercicio de las interfaces de usuario (creo xd)
-            Cuenta cuentaListado = localizarCuenta(cuentas[i].getIban()); // se hace un objeto que localiza el iban de la posicion de la cuenta
-            
-            // lo siguiente junta todo con el append
-            listado.append("IBAN: ").append(cuentaListado.getIban()).append("\t").append("Titular: ").append(cuentaListado.getTitular()).append("\t").append("Saldo: ").append(cuentaListado.getSaldo()).append("\n");
+            listado.append("IBAN: ").append(cuentas[i].getIban()).append("\t\t").append("Titular: ").append(cuentas[i].getTitular()).append("\t\t").append("Saldo: ").append(cuentas[i].getSaldo()).append("\n"); // lo siguiente junta todo con el append
         }
         
         return listado.toString();
     }
     
     public void ingresar(String codigo, double importe) {
-        
+        // falta por hacer
     }
     
     public void retirar(String codigo, double importe) {
-        
+        // falta por hacer
     }
     
     // Fin Metodos Publicos
@@ -148,6 +145,7 @@ public class Banco {
 //        return null;
 //    }
     
+    // no se para que quiere este metodo xd
     private Cuenta localizarCuenta(String codigo) {
         Cuenta cuenta = new Cuenta();
         
