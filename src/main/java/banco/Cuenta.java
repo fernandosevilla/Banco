@@ -58,14 +58,19 @@ public class Cuenta {
     // Fin Getters y Setters
     
     public void ingresarDinero(double cantidad) {
-        this.saldo += cantidad;
+        if (cantidad > 0) {
+            this.saldo += cantidad;
+        }
     }
     
     public void retirarDinero(double cantidad) {
         if (cantidad > 0 && cantidad <= saldo) {
             this.saldo -= cantidad;
-        } else {
-            System.out.println("No puedes retirar 0€ o mas del dinero de el que tienes");
         }
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s, %-30s, %.2f", this.iban, this.titular, this.saldo);
     }
 }
