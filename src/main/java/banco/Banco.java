@@ -55,22 +55,25 @@ public class Banco {
     // Inicio Metodos Publicos
     public boolean agregarCuenta(String codigo, String nombreTitular) {
         if (this.numeroCuentas > MAX_CUENTAS) {
-            System.out.println("No puedes crearte mas de 100 cuentas");
             return false;
         } else {
             this.cuentas[numeroCuentas++] = new Cuenta(codigo, nombreTitular);
-            System.out.println("Cuenta creada");
             return true;
         }
     }
     
     public String consultarCuenta(String codigo) {
+        StringBuilder consulta = new StringBuilder();
+
         for (int i = 0; i < numeroCuentas; i++) {
             if (cuentas[i].getIban().equals(codigo)) {
-                return "IBAN: " + codigo + "\t" + "Titular: " + cuentas[i].getTitular() + "\t" + "Saldo: " + cuentas[i].getSaldo();
+                consulta.append("IBAN: ").append(codigo).append("\t").append("Titular: ").append(cuentas[i].getTitular()).append("\t").append("Saldo: ").append(cuentas[i].getSaldo());
+                return consulta.toString();
             }
         }
-        return "La cuenta que has indicado no se ha encontrado";
+
+        consulta.append("La cuenta que has indicado no se ha encontrado");
+        return consulta.toString();
     }
     
     public boolean borrarCuenta(String codigo) {
@@ -86,32 +89,26 @@ public class Banco {
                 }
                 
                 numeroCuentas--;
-                System.out.println("Cuenta eliminada");
             }
-        }
-        if (cuentaEncontrada = false) {
-            System.out.println("Cuenta no encontrada");
         }
         
         return cuentaEncontrada;
     }
     
-    public boolean existeCuetna(String codigo) {       
+    public boolean existeCuenta(String codigo) {       
         for (int i = 0; i < numeroCuentas; i++) {
-            if (cuentas[i].getIban().equals(codigo)) { // obtiene el ibjn de la posicion de cuenta y lo compara con el parametro que se le pasa al metodo
-                System.out.println("La cuenta existe"); 
+            if (cuentas[i].getIban().equals(codigo)) { // obtiene el isbn de la posicion de cuenta y lo compara con el parametro que se le pasa al metodo
                 return true;
             }
         }
         
-        System.out.println("La cuenta no existe");
         return false;
     }
     
     public String listadoCuentas() {
         StringBuilder listado = new StringBuilder();
         
-        listado.append("Total de cuentas: ").append(numeroCuentas).append("):\n");
+        listado.append("Total de cuentas: ").append(numeroCuentas).append("\n");
         
         for (int i = 0; i < numeroCuentas; i++) {
             // esto se hace como cuando lo del ejercicio de las interfaces de usuario (creo xd)
@@ -121,12 +118,38 @@ public class Banco {
         return listado.toString();
     }
     
-    public void ingresar(String codigo, double importe) {
-        // falta por hacer
+    public double informaDeSaldo(String iban) {
+        if (existeCuenta(iban)) {
+            for (int i = 0; i < numeroCuentas; i++) {
+                if (cuentas[i].getIban().equals(iban)) {
+                    return cuentas[i].getSaldo(); // Devuelve el saldo de la cuenta si existe
+                }
+            }
+        }
+        
+        return -100000000; // Devuelve -100.000.000 si la cuenta no existe
     }
     
-    public void retirar(String codigo, double importe) {
-        // falta por hacer
+    public boolean ingresar(String codigo, double importe) {
+        Cuenta cuenta = localizarCuenta(codigo);
+        
+        if (cuenta == null) {
+            return false;
+        } else {
+            cuenta.ingresarDinero(importe);
+            return true;
+        }
+    }
+    
+    public boolean retirar(String codigo, double importe) {
+        Cuenta cuenta = localizarCuenta(codigo);
+        
+        if (cuenta == null) {
+            return false;
+        } else {
+            cuenta.retirarDinero(importe);
+            return true;
+        }
     }
     
     // Fin Metodos Publicos
@@ -134,26 +157,14 @@ public class Banco {
     
     // Inicio Metodos Privados
     
-//    private Cuenta localizarCuenta(String codigo) {
-//        // se busca secuencialmente la cuenta con un codigo
-//        Cuenta cuenta = new Cuenta();
-//        for (int i = 0; i < numeroCuentas; i++) {
-//            if (cuentas[i].getIban().equals(codigo)) { // obtiene el ibjn de la posicion de cuenta y lo compara con el parametro que se le pasa al metodo
-//                return cuenta; // devuelve la cuenta
-//            }
-//        }
-//        return null;
-//    }
-    
     // no se para que quiere este metodo xd
     private Cuenta localizarCuenta(String codigo) {
-        Cuenta cuenta = new Cuenta();
-        
-        if (existeCuetna(codigo)) {
-            return cuenta;
+        for (int i = 0; i < numeroCuentas; i++) {
+            if (cuentas[i].getIban().equals(codigo)) {
+                return cuentas[i]; // Devolver la cuenta encontrada
+            }
         }
-        
-        return null;
+        return null; // Devolver null si la cuenta no se encuentra
     }
     
     // Fin Metodos Privados
