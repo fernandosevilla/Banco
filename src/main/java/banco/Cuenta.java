@@ -64,13 +64,11 @@ public class Cuenta {
     }
     
     public void retirarDinero(double cantidad) {
-        if (cantidad > 0 && cantidad <= saldo) {
-            this.saldo -= cantidad;
-        }
+        this.saldo -= cantidad;
     }
     
-    @Override
-    public String toString() {
-        return String.format("%s, %-30s, %.2f", this.iban, this.titular, this.saldo);
-    }
+//    @Override
+//    public String toString() {
+//        return String.format("%s, %-30s, %.2f", this.iban, this.titular, this.saldo);
+//    }
 }
