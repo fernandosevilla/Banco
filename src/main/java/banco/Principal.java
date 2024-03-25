@@ -67,19 +67,32 @@ public class Principal {
                     if (miBanco != null) {
                         System.out.print("Ingresa el IBAN de la cuenta: ");
                         String iban = teclado.nextLine();
-                        System.out.print("Ingresa el titular de la cuenta: ");
+
+                        System.out.print("Ingresa el DNI del titular: ");
+                        String dni = teclado.nextLine();
+
+                        System.out.print("Ingresa el nombre del titular: ");
                         String titular = teclado.nextLine();
-                        miBanco.agregarCuenta(iban, titular);
+
+                        try {
+                            if (Cuenta.validarDNI(dni)) {
+                                miBanco.agregarCuenta(iban, dni, titular); // Se crea la cuenta
+                                System.out.println("La cuenta " + iban + " del titular " + titular + " se ha agregado bien");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Error: " + e.getMessage());
+                        }
                     } else {
                         System.out.println("No hay ningun banco creado");
                     }
-                    
+
                     break;
                 case 3:
                     try {
                         if (miBanco != null) {
                             System.out.print("Ingresa IBAN de la cuenta: ");
                             String ibanIngreso = teclado.nextLine();
+                            
                             System.out.print("Ingresa la cantidad a ingresar: ");
                             double cantidadIngreso = teclado.nextDouble();
                             teclado.nextLine();
@@ -95,19 +108,19 @@ public class Principal {
                     } catch (InputMismatchException e) {
                         System.out.println("ERROR: Debes escribir un numero");
                         System.out.println(e);
+                        
                         teclado.nextLine();
                         System.out.println();
                     } catch (IllegalArgumentException e) {
                         System.out.println(e);
                     }
-
-
                     break;
                 case 4:
                     try {
                         if (miBanco != null) {
                             System.out.print("Ingresa el IBAN de la cuenta: ");
                             String ibanRetiro = teclado.nextLine();
+                            
                             System.out.print("Ingresa la cantidad a retirar: ");
                             double cantidadRetiro = teclado.nextDouble();
                             teclado.nextLine();
@@ -123,17 +136,18 @@ public class Principal {
                     } catch (InputMismatchException e) {
                         System.out.println("ERROR: Debes escribir un numero");
                         System.out.println(e);
+                        
                         teclado.nextLine();
                         System.out.println();
                     } catch (IllegalArgumentException e) {
                         System.out.println(e);
                     }
-                    
                     break;
                 case 5:
                     if (miBanco != null) {
                         System.out.print("Ingresa el IBAN de la cuenta: ");
                         String ibanConsulta = teclado.nextLine();
+                        
                         System.out.println(miBanco.consultarCuenta(ibanConsulta));
                     } else {
                         System.out.println("No hay ningun banco creado");
