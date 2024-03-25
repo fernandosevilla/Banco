@@ -53,11 +53,11 @@ public class Banco {
     // Fin Getters y Setters
     
     // Inicio Metodos Publicos
-    public boolean agregarCuenta(String codigo, String nombreTitular) {
+    public boolean agregarCuenta(String codigo, String dni, String nombreTitular) {
         if (this.numeroCuentas > MAX_CUENTAS) {
             return false;
         } else {
-            this.cuentas[numeroCuentas++] = new Cuenta(codigo, nombreTitular);
+            this.cuentas[numeroCuentas++] = new Cuenta(codigo, dni ,nombreTitular);
             return true;
         }
     }
@@ -151,6 +151,11 @@ public class Banco {
             return true;
         }
     }
+    
+    // Este metodo ya es por mi cuenta
+//    public String comprobarCuentasPorDNI(String codigo) {
+//        
+//    }
     
     // Fin Metodos Publicos
     
