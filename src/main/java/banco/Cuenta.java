@@ -4,19 +4,23 @@
  */
 package banco;
 
+import java.util.regex.Pattern;
+
 /**
  * @author Fer
 */
 
 public class Cuenta {
     private String iban;
+    private String dni;
     private String titular;
     private double saldo;
     
     // Inicio Constructor
     
-    public Cuenta(String iban, String titular) {
+    public Cuenta(String iban, String dni, String titular) {
         this.iban = iban;
+        this.dni = dni;
         this.titular = titular;
         this.saldo = 0;
     }
@@ -24,7 +28,12 @@ public class Cuenta {
     public Cuenta() {
         this.iban = "";
         this.titular = "";
+        this.dni = "";
         this.saldo = 0;
+    }
+    
+    public Cuenta(String dni) {
+        this.dni = "";
     }
     
     // Fin Constructor
@@ -37,6 +46,14 @@ public class Cuenta {
 
     public void setIban(String iban) {
         this.iban = iban;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getTitular() {
@@ -56,6 +73,56 @@ public class Cuenta {
     }
     
     // Fin Getters y Setters
+    
+    public static boolean validarDNI(String dniNIE) throws Exception {
+        if (dniNIE.length() != 9) {
+            throw new Exception("El DNI debe de tener 9 caracteres");
+        } else {
+            String expNIF = "\\d{8}[A-Z]"; // Debe tener 8 digitos y despues una letra de la A a la Z
+            Pattern patronNIF = Pattern.compile(expNIF);
+            String expNIE = "[XYZ0-9]\\d{7}[A-Z]"; // Debe tener una letra (X, Y o Z) o un numero del 0 al 9, despues 7 numeros y una letra de la A a la Z
+            Pattern patronNIE = Pattern.compile(expNIE);
+
+            if (patronNIF.matcher(dniNIE).matches()) {
+                char letra = calcularLetra(Integer.parseInt(dniNIE.substring(0, 8))); // Coge los 8 numeros, los transforma a entero y de ahi calcula la letra con el metodo
+                
+                if (letra == dniNIE.charAt(8)) { // Si se corresponde la letra que se calcula con el caracter 9 (el 8 empezando desde el 0) es verdadero
+                    return true;
+                } else { // Si no es falso y lanza excepcion
+                    throw new Exception("La letra del NIF no es válida.");
+                }
+            } else if (patronNIE.matcher(dniNIE).matches()) {
+                // Transformamos el primer caracter con el metodo convertir, despues lo juntamos con los demas digitos, lo convertimos a entero y calculamos la letra con el metodo, abulta
+                char letra = calcularLetra(Integer.parseInt(convertirLetraInicial(dniNIE.charAt(0)) + dniNIE.substring(1, 8)));
+                
+                if (letra == dniNIE.charAt(8)) { // Si se corresponde la letra que se calcula con el caracter 9 (el 8 empezando desde el 0) es verdadero
+                    return true;
+                } else { // Si no es falso y lanzamos excepcion
+                    throw new Exception("La letra del NIE no es válida.");
+                }
+            } else { // Directamente si no se ajusta el parametro con las 2 expresiones regulares lanza excepcion de formato
+                throw new Exception("Error: Formato de documento inválido.");
+            }
+        }
+    }
+
+    private static char calcularLetra(int dniNIE) {
+        final String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+        return Character.toUpperCase(letras.charAt(dniNIE % 23));
+    }
+
+    private static String convertirLetraInicial(char letraInicial) throws Exception {
+        switch (Character.toUpperCase(letraInicial)) {
+            case 'X':
+                return "0";
+            case 'Y':
+                return "1";
+            case 'Z':
+                return "2";
+            default:
+                throw new Exception("No se ha podido convertir la letra inicial.");
+        }
+    }
     
     public void ingresarDinero(double cantidad) {
         if (cantidad > 0) {
