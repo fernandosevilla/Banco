@@ -69,14 +69,17 @@ public class Principal {
                         String iban = teclado.nextLine();
 
                         System.out.print("Ingresa el DNI del titular: ");
-                        String dni = teclado.nextLine();
+                        String dni = teclado.nextLine().toUpperCase();
 
                         System.out.print("Ingresa el nombre del titular: ");
                         String titular = teclado.nextLine();
+                        
+                        System.out.print("Ingresa el correo electronico del titular: ");
+                        String correo = teclado.nextLine().toLowerCase();
 
                         try {
-                            if (Cuenta.validarDNI(dni)) {
-                                miBanco.agregarCuenta(iban, dni, titular); // Se crea la cuenta
+                            if (Cuenta.validarDNI(dni) && Cuenta.validarCorreo(correo)) {
+                                miBanco.agregarCuenta(iban, dni, titular, correo); // Se crea la cuenta
                                 System.out.println("La cuenta " + iban + " del titular " + titular + " se ha agregado bien");
                             }
                         } catch (Exception e) {
