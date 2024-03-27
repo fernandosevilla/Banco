@@ -14,14 +14,16 @@ public class Cuenta {
     private String iban;
     private String dni;
     private String titular;
+    private String correo;
     private double saldo;
     
     // Inicio Constructor
     
-    public Cuenta(String iban, String dni, String titular) {
+    public Cuenta(String iban, String dni, String titular, String correo) {
         this.iban = iban;
         this.dni = dni;
         this.titular = titular;
+        this.correo = correo;
         this.saldo = 0;
     }
     
@@ -29,6 +31,7 @@ public class Cuenta {
         this.iban = "";
         this.titular = "";
         this.dni = "";
+        this.correo = "";
         this.saldo = 0;
     }
     
@@ -64,6 +67,14 @@ public class Cuenta {
         this.titular = titular;
     }
 
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
     public double getSaldo() {
         return saldo;
     }
@@ -73,6 +84,17 @@ public class Cuenta {
     }
     
     // Fin Getters y Setters
+    
+    public static boolean validarCorreo(String correo) throws Exception {
+        String expRegularCorreo = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"; // expresion de prueba, hay que mejorar
+        Pattern patronCorreo = Pattern.compile(expRegularCorreo);
+        
+        if (patronCorreo.matcher(correo).matches()) {
+            return true;
+        } else {
+            throw new Exception("Error: formato de correo electronico invalido");
+        }
+    }
     
     public static boolean validarDNI(String dniNIE) throws Exception {
         if (dniNIE.length() != 9) {
@@ -101,7 +123,7 @@ public class Cuenta {
                     throw new Exception("La letra del NIE no es válida.");
                 }
             } else { // Directamente si no se ajusta el parametro con las 2 expresiones regulares lanza excepcion de formato
-                throw new Exception("Error: Formato de documento inválido.");
+                throw new Exception("Error: formato de documento inválido.");
             }
         }
     }
