@@ -53,11 +53,11 @@ public class Banco {
     // Fin Getters y Setters
     
     // Inicio Metodos Publicos
-    public boolean agregarCuenta(String codigo, String dni, String nombreTitular) {
+    public boolean agregarCuenta(String codigo, String dni, String nombreTitular, String correo) {
         if (this.numeroCuentas > MAX_CUENTAS) {
             return false;
         } else {
-            this.cuentas[numeroCuentas++] = new Cuenta(codigo, dni ,nombreTitular);
+            this.cuentas[numeroCuentas++] = new Cuenta(codigo, dni ,nombreTitular, correo);
             return true;
         }
     }
@@ -67,7 +67,7 @@ public class Banco {
 
         for (int i = 0; i < numeroCuentas; i++) {
             if (cuentas[i].getIban().equals(codigo)) {
-                consulta.append("IBAN: ").append(codigo).append("\t").append("Titular: ").append(cuentas[i].getTitular()).append("\t").append("Saldo: ").append(cuentas[i].getSaldo());
+                consulta.append("IBAN: ").append(codigo).append("\t\t").append("Titular: ").append(cuentas[i].getTitular()).append("\t\t").append(cuentas[i].getCorreo()).append("\t\t").append("Saldo: ").append(cuentas[i].getSaldo());
                 return consulta.toString();
             }
         }
@@ -112,7 +112,7 @@ public class Banco {
         
         for (int i = 0; i < numeroCuentas; i++) {
             // esto se hace como cuando lo del ejercicio de las interfaces de usuario (creo xd)
-            listado.append("IBAN: ").append(cuentas[i].getIban()).append("\t\t").append("Titular: ").append(cuentas[i].getTitular()).append("\t\t").append("Saldo: ").append(cuentas[i].getSaldo()).append("\n"); // lo siguiente junta todo con el append
+            listado.append("IBAN: ").append(cuentas[i].getIban()).append("\t\t").append("Titular: ").append(cuentas[i].getTitular()).append("\t\t").append(cuentas[i].getCorreo()).append("\t\t").append("Saldo: ").append(cuentas[i].getSaldo()).append("\n"); // lo siguiente junta todo con el append
         }
         
         return listado.toString();
