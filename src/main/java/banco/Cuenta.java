@@ -1,7 +1,8 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+*/
+
 package banco;
 
 import java.util.regex.Pattern;
@@ -120,7 +121,7 @@ public class Cuenta {
                 if (letra == dniNIE.charAt(8)) { // Si se corresponde la letra que se calcula con el caracter 9 (el 8 empezando desde el 0) es verdadero
                     return true;
                 } else { // Si no es falso y lanzamos excepcion
-                    throw new Exception("La letra del NIE no es válida.");
+                    throw new Exception("Error: La letra del NIE no es válida.");
                 }
             } else { // Directamente si no se ajusta el parametro con las 2 expresiones regulares lanza excepcion de formato
                 throw new Exception("Error: formato de documento inválido.");
@@ -130,6 +131,7 @@ public class Cuenta {
 
     private static char calcularLetra(int dniNIE) {
         final String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+        
         return Character.toUpperCase(letras.charAt(dniNIE % 23));
     }
 

@@ -1,6 +1,7 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
+*/
+
 package banco;
 
 /**
@@ -58,6 +59,7 @@ public class Banco {
             return false;
         } else {
             this.cuentas[numeroCuentas++] = new Cuenta(codigo, dni ,nombreTitular, correo);
+            
             return true;
         }
     }
@@ -67,7 +69,8 @@ public class Banco {
 
         for (int i = 0; i < numeroCuentas; i++) {
             if (cuentas[i].getIban().equals(codigo)) {
-                consulta.append("IBAN: ").append(codigo).append("\t\t").append("Titular: ").append(cuentas[i].getTitular()).append("\t\t").append(cuentas[i].getCorreo()).append("\t\t").append("Saldo: ").append(cuentas[i].getSaldo());
+                consulta.append("IBAN: ").append(codigo).append("\t\t").append("Titular: ").append(cuentas[i].getTitular()).append("\t\t").append(cuentas[i].getDni()).append("\t\t").append(cuentas[i].getCorreo()).append("\t\t").append("Saldo: ").append(cuentas[i].getSaldo());
+                
                 return consulta.toString();
             }
         }
@@ -80,7 +83,7 @@ public class Banco {
         boolean cuentaEncontrada = false;
         
         for (int i = 0; i < numeroCuentas; i++) {
-            if (cuentas[i].getIban().equals(codigo)){ // obtiene el ibjn de la posicion de cuenta y lo compara con el parametro que se le pasa al metodo
+            if (cuentas[i].getIban().equals(codigo)){ // obtiene el iban de la posicion de cuenta y lo compara con el parametro que se le pasa al metodo
                 cuentaEncontrada = true;
                 
                 // movemos las cuentas despues de borrar
@@ -97,7 +100,7 @@ public class Banco {
     
     public boolean existeCuenta(String codigo) {       
         for (int i = 0; i < numeroCuentas; i++) {
-            if (cuentas[i].getIban().equals(codigo)) { // obtiene el isbn de la posicion de cuenta y lo compara con el parametro que se le pasa al metodo
+            if (cuentas[i].getIban().equals(codigo)) { // obtiene el iban de la posicion de cuenta y lo compara con el parametro que se le pasa al metodo
                 return true;
             }
         }
@@ -112,7 +115,7 @@ public class Banco {
         
         for (int i = 0; i < numeroCuentas; i++) {
             // esto se hace como cuando lo del ejercicio de las interfaces de usuario (creo xd)
-            listado.append("IBAN: ").append(cuentas[i].getIban()).append("\t\t").append("Titular: ").append(cuentas[i].getTitular()).append("\t\t").append(cuentas[i].getCorreo()).append("\t\t").append("Saldo: ").append(cuentas[i].getSaldo()).append("\n"); // lo siguiente junta todo con el append
+            listado.append("IBAN: ").append(cuentas[i].getIban()).append("\t\t").append("Titular: ").append(cuentas[i].getTitular()).append("\t\t").append(cuentas[i].getDni()).append("\t\t").append(cuentas[i].getCorreo()).append("\t\t").append("Saldo: ").append(cuentas[i].getSaldo()).append("\n"); // lo siguiente junta todo con el append
         }
         
         return listado.toString();
